@@ -129,15 +129,17 @@ input:focus {
     top: 5px;
     right: 5px;
 
-    background: color-mix(in lch, var(--bg-2) 50%, transparent 20%);
+    background: color-mix(in lch, var(--bg-2) 60%, transparent 10%);
     color: var(--text-col-2);
 
     border: 1px solid var(--accent-1);
     border-radius: 2px;
+
+    cursor: pointer;
 }
 
 .img-edit-label:hover {
-    background: var(--bg-3);
+    background: color-mix(in lch, var(--bg-3) 70%, transparent 10%);
     outline: 1px solid var(--accent-2);
 }
 

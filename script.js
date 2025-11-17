@@ -47,6 +47,19 @@ const actions = { // meant to be like an enum
 
 
 
+
+// OBJECT CONSTRUCTORS
+function Pet(petInfo) {
+    this.element = petInfo.element;
+    this.name = petInfo.name;
+    this.weight = petInfo.weight;
+    this.happiness = petInfo.happiness;
+    this.image = petInfo.image;
+}
+
+
+
+
 // EVENT HANDLERS
 
 function clickedTreatButton(event) {
@@ -215,11 +228,11 @@ function addPet(initInfo) {
     */
     $('.pets-container').append(newPetEl);
 
+
+    newPetInfo.element = newPetEl;
+
     // create new pet object
-    const newPet = {
-        element: newPetEl, // ref to dom element
-        ...newPetInfo // copy pet info
-    };
+    const newPet = new Pet(newPetInfo);
 
     // push pet object to pets array
     pets.push(newPet);
