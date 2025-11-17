@@ -62,6 +62,11 @@ function addPet() {
     newPetEl.find('.name-edit-button').on('click', { petEl: newPetEl }, clickedNameEditButton);
     newPetEl.find('.name-form').on('submit', { petEl: newPetEl }, submittedNameForm);
 
+    newPetEl.find('.pet-image-container').on('mouseenter', { petEl: newPetEl }, mouseEnteredImageContainer);
+    newPetEl.find('.pet-image-container').on('mouseleave', { petEl: newPetEl }, mouseLeftImageContainer);
+
+    newPetEl.find('.img-edit-input').on('change', { petEl: newPetEl }, changedImageEditValue);
+
     checkAndUpdatePetInfoInHtml(newPet.name, 0, 0, newPet.element);
 }
 
@@ -143,6 +148,32 @@ function submittedNameForm(event) {
 
 function clickedAddButton() {
     addPet();
+}
+
+function mouseEnteredImageContainer(event) {
+    const petEl = event.data.petEl;
+    const editLabel = petEl.find('.img-edit-label');
+
+    editLabel.toggleClass('no-display', false); // show label
+}
+
+function mouseLeftImageContainer(event) {
+    const petEl = event.data.petEl;
+    const editLabel = petEl.find('.img-edit-label');
+
+    editLabel.toggleClass('no-display', true); // show label
+}
+
+function changedImageEditValue(event) {
+    const file = event.target.files[0];
+    if(!file) return; // no file
+
+    const url = URL.createObjectURL(file);
+
+    const petEl = event.data.petEl;
+    const petImage = petEl.find('.pet-image');
+
+    petImage.attr('src', url);
 }
 
 
