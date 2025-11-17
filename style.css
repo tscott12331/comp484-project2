@@ -1,82 +1,140 @@
 
 * {
     box-sizing: border-box;
-  }
-  
-  body {
+}
+
+body {
     font-family: helvetica, arial, sans-serif;
     margin: 25px;
-  }
-  
-  main {
+}
+
+main {
     display:block;
     height:175px;
-  }
-  
-  header {
+}
+
+header {
     border-bottom: 1px solid black;
-  }
-  
-  h1 {
+}
+
+h1 {
     font-weight: bold;
     color: #000;
-  }
-  
-  .bold {
+}
+
+.bold {
     font-weight: bold;
-  }
-  
-  p {
+}
+
+p {
     max-width: 600px;
-  }
-  
-  
-  li {
+}
+
+
+li {
     margin-bottom: 5px;
-  }
-  
-  footer {
+}
+
+footer {
     padding-top: 25px;
     border-top: 1px solid black;
-  }
-  
-  footer a {
+}
+
+footer a {
     float:left;
     margin:5px;
-  }
-  
-  .pet-image {
+}
+
+button {
+    text-align: center;
+    font-size: 15px;
+    cursor:pointer;
+
+    outline: none;
+}
+
+input, button {
+    font-family: inherit;
+}
+
+#pet-template {
+    display: none;
+}
+
+.pet-container {
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 10px;
+    margin-bottom: 30px;
+}
+
+.pet-image {
     height:250px;
-  }
-  
-  .dashboard div {
-    display:block;
-  }
-  
-  .pet-image-container {
-    float:left;
-    padding:10px;
-  }
-  
-  .dashboard {
-    float:left;
-    padding:20px;
-  }
-  
-  .button-container {
+    border: 2px solid oklch(21.6% 0.006 56.043);
+}
+
+.pet-image-container {
+    position: relative;
+}
+
+.action-indicator {
+    margin: 0;
+    position: absolute;
+    left: 5px;
+    bottom: 9px;
+    
+    background: linear-gradient(oklch(72.3% 0.219 149.579 / .9), oklch(37.8% 0.077 168.94 / .7));
+    color: oklch(98.5% 0.001 106.423);
+    padding: 4px;
+
+    border-radius: 4px;
+}
+
+.name-input {
+    margin-top: 5px;
+}
+
+.pet-name-and-button {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.pet-name-and-button > button {
+    font-size: 12px;
+}
+
+.button-container {
     margin-top:20px;
-  }
-  
-  .button-container button {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.button-container button {
     width: 100px;
-      margin-right: 10px;
-      text-align: center;
-      display: inline-block;
-      float: left;
+    text-align: center;
+    display: inline-block;
     font-size:15px;
     background-color: #1e2835;
     border-color: #404853;
     cursor:pointer;
     background-image: linear-gradient(to bottom,rgba(246,246,246,.1)0%,rgba(30,40,53,0)66%);
     color: #fafafa;
-  }
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+
+.no-display {
+    display: none;
+}
