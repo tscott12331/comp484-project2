@@ -32,70 +32,13 @@ const actions = { // meant to be like an enum
     treat: 0,
     play: 1,
     exercise: 2,
+    changeName: 3,
+    changeImage: 4,
 }
 
 
-function addPet() {
-    const newPetTemplate = $('#pet-template').clone();
-    const newPetEl = $(newPetTemplate).find('.pet-container');
 
-    $('.pets-container').append(newPetEl);
-
-    const newPet = {
-        element: newPetEl,
-        ...pet_info // copy default pet info
-    };
-
-    pets.push(newPet);
-
-    // set event listeners for this specific pet element
-
-    // newPetEl.find('.treat-button').click(clickedTreatButton);
-    // newPetEl.find('.play-button').click(clickedPlayButton);
-    // newPetEl.find('.exercise-button').click(clickedExerciseButton);
-    // newPetEl.find('.name-edit-button').click(clickedNameEditButton);
-    // newPetEl.find('.name-form').submit(submittedNameForm);
-
-    newPetEl.find('.treat-button').on('click', { petEl: newPetEl }, clickedTreatButton);
-    newPetEl.find('.play-button').on('click', { petEl: newPetEl }, clickedPlayButton);
-    newPetEl.find('.exercise-button').on('click', { petEl: newPetEl }, clickedExerciseButton);
-    newPetEl.find('.name-edit-button').on('click', { petEl: newPetEl }, clickedNameEditButton);
-    newPetEl.find('.name-form').on('submit', { petEl: newPetEl }, submittedNameForm);
-
-    newPetEl.find('.pet-image-container').on('mouseenter', { petEl: newPetEl }, mouseEnteredImageContainer);
-    newPetEl.find('.pet-image-container').on('mouseleave', { petEl: newPetEl }, mouseLeftImageContainer);
-
-    newPetEl.find('.img-edit-input').on('change', { petEl: newPetEl }, changedImageEditValue);
-
-    checkAndUpdatePetInfoInHtml(newPet.name, 0, 0, newPet.element);
-}
-
-
-function displayAction(action, petEl) {
-    const actionIndicatorEl = petEl.find('.action-indicator');
-    
-    switch(action) {
-        case actions.treat:
-            actionIndicatorEl.text('Yum!');
-            break;
-        case actions.play:
-            actionIndicatorEl.text('Fun!');
-            break;
-        case actions.exercise:
-            actionIndicatorEl.text("I'm tired!");
-            break;
-    }
-
-    actionIndicatorEl.toggleClass('no-display', false);
-    actionIndicatorEl.css('opacity', '100%');
-    actionIndicatorEl.stop(true, false);
-
-    actionIndicatorEl.fadeTo(1200, 0, () => {
-        actionIndicatorEl.toggleClass('no-display', true);
-        actionIndicatorEl.css('opacity', '100%');
-    })
-}
-
+// EVENT HANDLERS
 
 function clickedTreatButton(event) {
     // Increase pet happiness
@@ -119,13 +62,6 @@ function clickedExerciseButton(event) {
     const petEl = event.data.petEl;
     displayAction(actions.exercise, petEl);
     checkAndUpdatePetInfoInHtml(null, -WEIGHT_INC, -HAPPINESS_INC, petEl);
-}
-
-function updateEditButtonState(petEl) {
-    const clickedButton = petEl.find('.name-edit-button');
-    const formEl = petEl.find('.name-form');
-
-    clickedButton.text(formEl.hasClass('no-display') ? "Edit name" : "Cancel");
 }
 
 function clickedNameEditButton(event) {
@@ -156,6 +92,8 @@ function submittedNameForm(event) {
     inputEl.val(""); // reset input value
     
     checkAndUpdatePetInfoInHtml(newName, 0, 0, petEl);
+
+    displayAction(actions.changeName, petEl);
 }
 
 function clickedAddButton() {
@@ -186,6 +124,81 @@ function changedImageEditValue(event) {
     const petImage = petEl.find('.pet-image');
 
     petImage.attr('src', url);
+
+    displayAction(actions.changeImage, petEl);
+}
+
+
+
+// UTIL FUNCTIONS
+
+function updateEditButtonState(petEl) {
+    const clickedButton = petEl.find('.name-edit-button');
+    const formEl = petEl.find('.name-form');
+
+    clickedButton.text(formEl.hasClass('no-display') ? "Edit name" : "Cancel");
+}
+
+
+function addPet() {
+    const newPetTemplate = $('#pet-template').clone();
+    const newPetEl = $(newPetTemplate).find('.pet-container');
+
+    $('.pets-container').append(newPetEl);
+
+    const newPet = {
+        element: newPetEl,
+        ...pet_info // copy default pet info
+    };
+
+    pets.push(newPet);
+
+    // set event listeners for this specific pet element
+
+    newPetEl.find('.treat-button').on('click', { petEl: newPetEl }, clickedTreatButton);
+    newPetEl.find('.play-button').on('click', { petEl: newPetEl }, clickedPlayButton);
+    newPetEl.find('.exercise-button').on('click', { petEl: newPetEl }, clickedExerciseButton);
+    newPetEl.find('.name-edit-button').on('click', { petEl: newPetEl }, clickedNameEditButton);
+    newPetEl.find('.name-form').on('submit', { petEl: newPetEl }, submittedNameForm);
+
+    newPetEl.find('.pet-image-container').on('mouseenter', { petEl: newPetEl }, mouseEnteredImageContainer);
+    newPetEl.find('.pet-image-container').on('mouseleave', { petEl: newPetEl }, mouseLeftImageContainer);
+
+    newPetEl.find('.img-edit-input').on('change', { petEl: newPetEl }, changedImageEditValue);
+
+    checkAndUpdatePetInfoInHtml(newPet.name, 0, 0, newPet.element);
+}
+
+
+function displayAction(action, petEl) {
+    const actionIndicatorEl = petEl.find('.action-indicator');
+    
+    switch(action) {
+        case actions.treat:
+            actionIndicatorEl.text('Yum!');
+            break;
+        case actions.play:
+            actionIndicatorEl.text('Fun!');
+            break;
+        case actions.exercise:
+            actionIndicatorEl.text("That's tiring!");
+            break;
+        case actions.changeName:
+            actionIndicatorEl.text("Wow, a new name!");
+            break;
+        case actions.changeImage:
+            actionIndicatorEl.text("Wow, a new look!");
+            break;
+    }
+
+    actionIndicatorEl.toggleClass('no-display', false);
+    actionIndicatorEl.css('opacity', '100%');
+    actionIndicatorEl.stop(true, false);
+
+    actionIndicatorEl.fadeTo(1200, 0, () => {
+        actionIndicatorEl.toggleClass('no-display', true);
+        actionIndicatorEl.css('opacity', '100%');
+    })
 }
 
 
