@@ -29,7 +29,7 @@ const IMG_PLACEHOLDER_SRC = 'images/placeholder.svg';
 const pets = [];
 
 // default values for a pet object (also shows the structure of a pet object)
-const pet_info = {
+const PET_INFO = {
     name: INIT_NAME,
     weight: MIN_WEIGHT,
     happiness: MIN_HAPPINESS,
@@ -193,9 +193,9 @@ function updateEditButtonState(petEl) {
 }
 
 
-function addPet(init_info) {
-    // use init_info if it exists
-    const newPetInfo = init_info ?? pet_info;
+function addPet(initInfo) {
+    // use initInfo if it exists
+    const newPetInfo = initInfo ?? PET_INFO;
 
     // clone hidden template in DOM
     const newPetTemplate = $('#pet-template').clone();
@@ -269,33 +269,33 @@ function displayAction(action, petEl) {
 }
 
 
-function checkAndUpdatePetInfoInHtml(name, image, weight_diff, happiness_diff, petEl) {
+function checkAndUpdatePetInfoInHtml(name, image, weightDiff, happinessDiff, petEl) {
     // get correct object in pets array
     const petObj = pets.find((p) => p.element.is(petEl)); // compares dom elements
     
     // make sure pet object gets updated correctly
-    checkWeightAndHappinessBeforeUpdating(name, image, weight_diff, happiness_diff, petObj);
+    checkWeightAndHappinessBeforeUpdating(name, image, weightDiff, happinessDiff, petObj);
     // update html based on pet object
     updatePetInfoInHtml(petObj);
 }
 
 
-// updates pet_info obj
-function checkWeightAndHappinessBeforeUpdating(name, image, weight_diff, happiness_diff, petObj) {
+// updates a petObject
+function checkWeightAndHappinessBeforeUpdating(name, image, weightDiff, happinessDiff, petObj) {
     // calculate new weight and happiness based on diffs
-    const new_weight = petObj.weight + weight_diff;
-    const new_happiness = petObj.happiness + happiness_diff;
+    const newWeight = petObj.weight + weightDiff;
+    const newHappiness = petObj.happiness + happinessDiff;
 
     // make sure weight and happiness don't go below min (0)
-    petObj.weight = new_weight > MIN_WEIGHT ? new_weight : MIN_WEIGHT;
-    petObj.happiness = new_happiness > MIN_HAPPINESS ? new_happiness : MIN_HAPPINESS;
+    petObj.weight = newWeight > MIN_WEIGHT ? newWeight : MIN_WEIGHT;
+    petObj.happiness = newHappiness > MIN_HAPPINESS ? newHappiness : MIN_HAPPINESS;
 
     if(name) petObj.name = name; // set name if given name is not null
     if(image) petObj.image = image; // set image if given image is not null
     
 }
 
-// Updates your HTML with the current values in your pet_info object
+// Updates your HTML with the current values in a pet object
 function updatePetInfoInHtml(petObj) {
     // set text and attributes of elements accordingly
     petObj.element.find('.name').text(petObj.name);
